@@ -41,7 +41,8 @@
 }
 
 @theme inline {
-  --font-sans: 'Inter', 'Geist', 'Geist Fallback';
+  --font-sans: 'Poppins', 'Geist', 'Geist Fallback';
+  --font-serif: 'Montserrat', 'Geist', 'Geist Fallback';
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
   --color-background: var(--background);
   --color-foreground: var(--foreground);
