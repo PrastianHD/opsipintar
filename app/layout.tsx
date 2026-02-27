@@ -1,14 +1,14 @@
-import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import type { Metadata, Viewport } from 'next'
+import { Inter, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const _geist = Geist({ subsets: ["latin"] });
+const _inter = Inter({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
+  title: 'Opsi Pintar - Rekomendasi Produk Terbaik',
+  description: 'Temukan produk viral, gadget keren, dan solusi hemat pilihan terbaik. Cek di Shopee & TikTok Shop sekarang!',
   generator: 'v0.app',
   icons: {
     icon: [
@@ -29,13 +29,18 @@ export const metadata: Metadata = {
   },
 }
 
+export const viewport: Viewport = {
+  themeColor: '#001F5B',
+  userScalable: true,
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="id">
       <body className="font-sans antialiased">
         {children}
         <Analytics />
