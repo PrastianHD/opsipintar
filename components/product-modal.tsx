@@ -1,20 +1,10 @@
 "use client"
 
 import Image from "next/image"
-import { X, ExternalLink, Play, Star, ShoppingBag } from "lucide-react"
+import { X, ExternalLink, BookOpen, ShoppingBag } from "lucide-react"
 import { useEffect, useCallback } from "react"
 import type { Product } from "@/lib/types"
 import { sanitizeImageUrl } from "@/lib/image-url"
-
-interface ExtendedProduct extends Product {
-  is_trending?: boolean
-  is_hemat?: boolean
-  is_featured?: boolean
-  video_url?: string | null
-  review_url?: string | null
-  tokopedia_url?: string | null
-  lazada_url?: string | null
-}
 
 function formatRupiah(amount: number): string {
   return new Intl.NumberFormat("id-ID", {
@@ -26,14 +16,11 @@ function formatRupiah(amount: number): string {
 }
 
 interface ProductModalProps {
-  product: ExtendedProduct
+  product: Product
   onClose: () => void
 }
 
 export function ProductModal({ product, onClose }: ProductModalProps) {
-  const videoUrl = product.video_url ?? null
-  const reviewUrl = product.review_url ?? null
-  const lainnyaUrl = product.tokopedia_url ?? product.lazada_url ?? null
   const imageUrl = sanitizeImageUrl(product.image_url)
 
   useEffect(() => {
@@ -52,13 +39,13 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
-      {/* Backdrop — navy tint for brand cohesion */}
+      {/* Backdrop */}
       <div
         className="absolute inset-0 bg-navy/60 backdrop-blur-sm animate-in fade-in duration-200"
         onClick={onClose}
       />
 
-      {/* Modal panel */}
+      {/* Panel */}
       <div className={[
         "relative bg-white w-full sm:max-w-lg sm:rounded-3xl rounded-t-3xl",
         "flex flex-col max-h-[92dvh] overflow-hidden",
@@ -66,12 +53,12 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
         "shadow-[0_24px_64px_rgba(0,31,91,0.3)]",
       ].join(" ")}>
 
-        {/* Gold drag handle (mobile) */}
+        {/* Drag handle (mobile) */}
         <div className="flex justify-center pt-3 pb-1 sm:hidden">
           <div className="w-10 h-1 rounded-full bg-gold/40" />
         </div>
 
-        {/* Close button */}
+        {/* Close */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 z-10 size-8 flex items-center justify-center rounded-full bg-white/95 shadow-md text-foreground hover:text-navy transition-colors backdrop-blur-sm"
@@ -96,7 +83,7 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
             </div>
           )}
 
-          {/* Badges — all navy/gold */}
+          {/* Badges */}
           <div className="absolute top-3 left-3 flex gap-1.5 flex-wrap">
             <span className="rounded-full bg-navy/90 backdrop-blur-sm text-white text-[10px] font-semibold px-2.5 py-0.5 font-sans">
               {product.category}
@@ -106,11 +93,6 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
                 🔥 Trending
               </span>
             )}
-            {product.is_hemat && (
-              <span className="rounded-full bg-gold px-2.5 py-0.5 text-[10px] font-semibold text-navy">
-                💰 Opsi Hemat
-              </span>
-            )}
             {product.is_featured && (
               <span className="rounded-full bg-gold px-2.5 py-0.5 text-[10px] font-semibold text-navy">
                 ⭐ Featured
@@ -118,7 +100,6 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
             )}
           </div>
 
-          {/* Bottom gradient */}
           <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-navy/30 to-transparent" />
         </div>
 
@@ -128,11 +109,9 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
 
             {/* Title + Price */}
             <div>
-              {/* Montserrat heading */}
               <h2 className="font-heading text-base font-bold text-foreground leading-snug">
                 {product.title}
               </h2>
-              {/* Gold price */}
               <p className="font-heading text-xl font-black text-gold-dark mt-1">
                 {formatRupiah(product.price)}
               </p>
@@ -145,9 +124,8 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
               </p>
             )}
 
-            {/* CTA Buttons */}
+            {/* CTAs */}
             <div className="flex flex-col gap-2.5 pt-1">
-              {/* Section label */}
               <p className="text-[10px] font-semibold text-gold uppercase tracking-widest">
                 Beli Sekarang
               </p>
@@ -162,28 +140,18 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
                 <ExternalLink className="size-4" />Beli di TikTok Shop
               </a>
 
-              {lainnyaUrl && (
-                <a href={lainnyaUrl} target="_blank" rel="noopener noreferrer"
+              {product.others_url && (
+                <a href={product.others_url} target="_blank" rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 rounded-2xl border-2 border-border bg-white px-4 py-3 text-sm font-semibold text-foreground hover:border-gold/40 hover:bg-secondary active:scale-[0.98] transition-all">
                   <ExternalLink className="size-4" />Lainnya (Tokped / Lazada)
                 </a>
               )}
 
-              {(videoUrl || reviewUrl) && (
-                <div className="flex gap-2 pt-1">
-                  {videoUrl && (
-                    <a href={videoUrl} target="_blank" rel="noopener noreferrer"
-                      className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-gold/30 bg-gold-muted px-3 py-2.5 text-xs font-semibold text-gold-dark hover:bg-gold/20 active:scale-[0.98] transition-all">
-                      <Play className="size-3.5 fill-gold-dark text-gold-dark" />Cek Video Demo
-                    </a>
-                  )}
-                  {reviewUrl && (
-                    <a href={reviewUrl} target="_blank" rel="noopener noreferrer"
-                      className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-navy/20 bg-navy/5 px-3 py-2.5 text-xs font-semibold text-navy hover:bg-navy/10 active:scale-[0.98] transition-all">
-                      <Star className="size-3.5 fill-navy text-navy" />Review Produk
-                    </a>
-                  )}
-                </div>
+              {product.review_url && (
+                <a href={product.review_url} target="_blank" rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 rounded-2xl border border-gold/30 bg-gold-muted px-4 py-2.5 text-sm font-semibold text-gold-dark hover:bg-gold/20 active:scale-[0.98] transition-all">
+                  <BookOpen className="size-4" />Cek Review / Video
+                </a>
               )}
             </div>
           </div>
