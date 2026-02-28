@@ -3,94 +3,191 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ── Brand Design Tokens ────────────────────────────────────────────────────── */
 :root {
-  /* Opsi Pintar Brand: Deep Dark Blue #001F5B & Gold #C5A059 */
-  --background: #f8f9fc;
-  --foreground: #001F5B;
-  --card: #ffffff;
-  --card-foreground: #001F5B;
-  --popover: #ffffff;
-  --popover-foreground: #001F5B;
-  --primary: #001F5B;
-  --primary-foreground: #ffffff;
-  --secondary: #f0ede6;
-  --secondary-foreground: #001F5B;
-  --muted: #f0f2f7;
-  --muted-foreground: #4a5578;
-  --accent: #C5A059;
-  --accent-foreground: #001F5B;
-  --destructive: oklch(0.577 0.245 27.325);
+  /* Core brand */
+  --navy:          #001F5B;
+  --navy-light:    #0a2d6e;
+  --navy-dark:     #001040;
+  --gold:          #C5A059;
+  --gold-light:    #D4B87A;
+  --gold-dark:     #A8883E;
+  --gold-muted:    rgba(197,160,89,0.15);
+
+  /* Semantic */
+  --background:         #F5F6FA;
+  --foreground:         var(--navy);
+  --card:               #FFFFFF;
+  --card-foreground:    var(--navy);
+  --popover:            #FFFFFF;
+  --popover-foreground: var(--navy);
+  --primary:            var(--navy);
+  --primary-foreground: #FFFFFF;
+  --secondary:          #EEE9DF;
+  --secondary-foreground: var(--navy);
+  --muted:              #EFF1F8;
+  --muted-foreground:   #4A5578;
+  --accent:             var(--gold);
+  --accent-foreground:  var(--navy);
+  --destructive:        oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: #e2e5ef;
-  --input: #e2e5ef;
-  --ring: #C5A059;
-  --chart-1: #001F5B;
-  --chart-2: #C5A059;
-  --chart-3: #3a5a9f;
-  --chart-4: #d4b87a;
-  --chart-5: #6b82b8;
-  --radius: 0.625rem;
-  --sidebar: #001F5B;
-  --sidebar-foreground: #ffffff;
-  --sidebar-primary: #C5A059;
-  --sidebar-primary-foreground: #001F5B;
-  --sidebar-accent: #0a2d6e;
-  --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #0a2d6e;
-  --sidebar-ring: #C5A059;
+  --border:             #DDE0EE;
+  --input:              #DDE0EE;
+  --ring:               var(--gold);
+  --radius:             0.625rem;
+
+  /* Sidebar */
+  --sidebar:                    var(--navy);
+  --sidebar-foreground:         #FFFFFF;
+  --sidebar-primary:            var(--gold);
+  --sidebar-primary-foreground: var(--navy);
+  --sidebar-accent:             var(--navy-light);
+  --sidebar-accent-foreground:  #FFFFFF;
+  --sidebar-border:             var(--navy-light);
+  --sidebar-ring:               var(--gold);
+
+  /* Charts */
+  --chart-1: var(--navy);
+  --chart-2: var(--gold);
+  --chart-3: #3A5A9F;
+  --chart-4: var(--gold-light);
+  --chart-5: #6B82B8;
 }
 
+/* ── Tailwind Theme Mapping ─────────────────────────────────────────────────── */
 @theme inline {
-  --font-sans: 'Poppins', 'Geist', 'Geist Fallback';
-  --font-serif: 'Montserrat', 'Geist', 'Geist Fallback';
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
+  /* Fonts — Montserrat headings, Poppins body */
+  --font-sans:    'Poppins',    ui-sans-serif, system-ui, sans-serif;
+  --font-heading: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    'Geist Mono', ui-monospace, monospace;
+
+  /* Brand colors as Tailwind tokens */
+  --color-navy:       var(--navy);
+  --color-navy-light: var(--navy-light);
+  --color-navy-dark:  var(--navy-dark);
+  --color-gold:       var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-dark:  var(--gold-dark);
+  --color-gold-muted: var(--gold-muted);
+
+  /* Semantic tokens */
+  --color-background:            var(--background);
+  --color-foreground:            var(--foreground);
+  --color-card:                  var(--card);
+  --color-card-foreground:       var(--card-foreground);
+  --color-popover:               var(--popover);
+  --color-popover-foreground:    var(--popover-foreground);
+  --color-primary:               var(--primary);
+  --color-primary-foreground:    var(--primary-foreground);
+  --color-secondary:             var(--secondary);
+  --color-secondary-foreground:  var(--secondary-foreground);
+  --color-muted:                 var(--muted);
+  --color-muted-foreground:      var(--muted-foreground);
+  --color-accent:                var(--accent);
+  --color-accent-foreground:     var(--accent-foreground);
+  --color-destructive:           var(--destructive);
+  --color-destructive-foreground:var(--destructive-foreground);
+  --color-border:                var(--border);
+  --color-input:                 var(--input);
+  --color-ring:                  var(--ring);
+  --color-chart-1:               var(--chart-1);
+  --color-chart-2:               var(--chart-2);
+  --color-chart-3:               var(--chart-3);
+  --color-chart-4:               var(--chart-4);
+  --color-chart-5:               var(--chart-5);
+  --radius-sm:  calc(var(--radius) - 4px);
+  --radius-md:  calc(var(--radius) - 2px);
+  --radius-lg:  var(--radius);
+  --radius-xl:  calc(var(--radius) + 4px);
+  --color-sidebar:                    var(--sidebar);
+  --color-sidebar-foreground:         var(--sidebar-foreground);
+  --color-sidebar-primary:            var(--sidebar-primary);
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-gold: #C5A059;
-  --color-gold-light: #d4b87a;
-  --color-navy: #001F5B;
-  --color-navy-light: #0a2d6e;
+  --color-sidebar-accent:             var(--sidebar-accent);
+  --color-sidebar-accent-foreground:  var(--sidebar-accent-foreground);
+  --color-sidebar-border:             var(--sidebar-border);
+  --color-sidebar-ring:               var(--sidebar-ring);
 }
 
+/* ── Base Styles ────────────────────────────────────────────────────────────── */
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+  *,
+  *::before,
+  *::after {
+    border-color: var(--border);
+    outline-color: color-mix(in srgb, var(--gold) 50%, transparent);
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--background);
+    color: var(--foreground);
+    scrollbar-gutter: stable;
+    font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+  }
+
+  /* Headings use Montserrat */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+  }
+
+  a, button, article {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* ── Utility: font-heading ──────────────────────────────────────────────────── */
+.font-heading {
+  font-family: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ── Shimmer skeleton animation ─────────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.animate-shimmer {
+  animation: shimmer 1.4s ease-in-out infinite;
+  background: linear-gradient(
+    90deg,
+    #EFF1F8 25%,
+    #E5E8F2 50%,
+    #EFF1F8 75%
+  );
+  background-size: 400% 100%;
+}
+
+/* ── Hide scrollbar utility ─────────────────────────────────────────────────── */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* opsipintar/app/globals.css */
+@layer base {
+  html {
+    /* Smooth scroll saat navigasi */
+    scroll-behavior: smooth;
+    /* Hilangkan abu-abu saat klik di HP */
+    -webkit-tap-highlight-color: transparent;
+    @apply antialiased;
+  }
+
+  body {
+    /* Mencegah text layout shift */
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Bikin transisi antar link kerasa lebih natural */
+  a, button {
+    touch-action: manipulation;
+    @apply transition-all duration-200 active:scale-95;
   }
 }

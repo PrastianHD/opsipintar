@@ -1,0 +1,21 @@
+{
+  // Tell VS Code CSS validator to ignore Tailwind v4 at-rules
+  "css.validate": false,
+  "scss.validate": false,
+  "less.validate": false,
+
+  // Use the Tailwind CSS IntelliSense extension for validation instead
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+
+  // Associate .css files with Tailwind so IntelliSense works
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+
+  // Tailwind v4: tell IntelliSense where CSS entrypoint is
+  "tailwindCSS.experimental.configFile": {
+    "app/globals.css": "**"
+  }
+}
