@@ -19,6 +19,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [loggingOut, startLogout] = useTransition()
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
+  if (pathname === "/admin/login") {
+    return <>{children}</>
+  }
+
   function handleLogout() {
     startLogout(async () => {
       const supabase = createClient()
