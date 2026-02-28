@@ -16,11 +16,14 @@ export type Product = {
 
 export const CATEGORIES = [
   'Semua',
-  'Opsi Viral',
-  'Opsi Gadget',
-  'Opsi Rumah',
-  'Opsi Fashion',
-  'Opsi Lainya',
+  'Viral',
+  'Gadget',
+  'Rumah',
+  'Fashion Cowok',
+  'Fashion Cewek',
+  'Kebutuhan Dapur',
+  'Digital',
+  'Opsi Lainnya',
 ] as const
 
 export type Category = (typeof CATEGORIES)[number]
