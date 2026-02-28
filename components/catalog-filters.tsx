@@ -7,14 +7,19 @@ import { cn } from "@/lib/utils"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useCallback, useTransition, useState, useEffect } from "react"
 
-export function CatalogFilters() {
+// 1. ADDED INTERFACE to stop TypeScript from tweaking
+interface CatalogFiltersProps {
+  currentCategory?: string;
+}
+
+export function CatalogFilters({ currentCategory: propCategory }: CatalogFiltersProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
   const [drawerOpen, setDrawerOpen] = useState(false)
 
   const currentSearch = searchParams.get("q") || ""
-  const currentCategory = (searchParams.get("category") || "Semua") as Category
+  const currentCategory = (searchParams.get("category") || propCategory || "Semua") as Category
 
   const updateParams = useCallback(
     (key: string, value: string) => {
@@ -47,51 +52,57 @@ export function CatalogFilters() {
 
   return (
     <>
-      {/* ══ DESKTOP ══ */}
-      <div className="hidden md:block sticky top-0 z-20 bg-white/96 backdrop-blur-sm border-b border-border pb-3 pt-3">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-2.5">
+      {/* ══ DESKTOP GLOW-UP ══ */}
+      <div className="hidden md:block sticky top-0 z-20 bg-white/95 backdrop-blur-md border-b border-border pt-4 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-5">
 
-          {/* Search */}
-          <div className="relative max-w-md mx-auto w-full">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
+          {/* Search - Left Aligned and Wider */}
+          <div className="relative w-full max-w-2xl">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4.5 text-muted-foreground pointer-events-none" />
             <Input
               type="search"
-              placeholder="Cari produk..."
+              placeholder="Cari produk di Opsi Pintar..."
               defaultValue={currentSearch}
               onChange={(e) => updateParams("q", e.target.value)}
-              className="pl-9 pr-9 h-10 rounded-xl border-border focus-visible:border-gold focus-visible:ring-gold/20 text-sm font-sans"
+              className="pl-10 pr-10 h-11 w-full rounded-xl border-border bg-muted/30 hover:bg-white focus-visible:bg-white focus-visible:border-gold focus-visible:ring-gold/20 text-sm font-sans transition-all"
             />
             {currentSearch && (
-              <button onClick={clearSearch} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
-                <X className="size-4" />
+              <button onClick={clearSearch} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
+                <X className="size-4.5" />
               </button>
             )}
           </div>
 
-          {/* Category pills */}
-          <nav className="flex items-center gap-2 overflow-x-auto scrollbar-none sm:flex-wrap sm:justify-center" role="tablist">
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat}
-                role="tab"
-                aria-selected={currentCategory === cat}
-                onClick={() => updateParams("category", cat)}
-                className={cn(
-                  "shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold transition-all border whitespace-nowrap font-sans",
-                  currentCategory === cat
-                    ? "bg-navy text-white border-navy shadow-sm"
-                    : "bg-white text-muted-foreground border-border hover:border-gold/60 hover:text-foreground"
-                )}
-              >
-                {cat}
-              </button>
-            ))}
+          {/* Category Tabs - Marketplace Style (Underline) */}
+          <nav className="flex items-center gap-8 overflow-x-auto scrollbar-none border-b border-transparent" role="tablist">
+            {CATEGORIES.map((cat) => {
+              const isActive = currentCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => updateParams("category", cat)}
+                  className={cn(
+                    "pb-3 text-sm transition-colors whitespace-nowrap relative font-sans",
+                    isActive
+                      ? "text-navy font-bold"
+                      : "text-muted-foreground hover:text-foreground font-medium"
+                  )}
+                >
+                  {cat}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-gold rounded-t-md" />
+                  )}
+                </button>
+              )
+            })}
           </nav>
         </div>
 
-        {/* Brand gold progress bar on filter change */}
+        {/* Loader */}
         {isPending && (
-          <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-navy via-gold to-navy animate-pulse" />
+          <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-navy via-gold to-navy animate-pulse" />
         )}
       </div>
 
@@ -113,7 +124,6 @@ export function CatalogFilters() {
           )}
         </div>
 
-        {/* Filter FAB — navy fill when active, gold ring on hover */}
         <button
           onClick={() => setDrawerOpen(true)}
           className={cn(
@@ -140,29 +150,15 @@ export function CatalogFilters() {
       {/* ══ MOBILE Filter Drawer ══ */}
       {drawerOpen && (
         <div className="fixed inset-0 z-50 md:hidden flex flex-col justify-end">
-          {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-navy/60 backdrop-blur-sm animate-in fade-in duration-200"
-            onClick={() => setDrawerOpen(false)}
-          />
-
-          {/* Sheet */}
+          <div className="absolute inset-0 bg-navy/60 backdrop-blur-sm animate-in fade-in duration-200" onClick={() => setDrawerOpen(false)} />
           <div className="relative bg-white rounded-t-3xl px-5 pt-4 pb-10 flex flex-col gap-5 animate-in slide-in-from-bottom duration-300 max-h-[80dvh] overflow-y-auto">
-            {/* Gold drag handle */}
             <div className="mx-auto w-10 h-1 rounded-full bg-gold/40 shrink-0" />
-
-            {/* Header */}
             <div className="flex items-center justify-between shrink-0">
               <h3 className="font-heading font-bold text-navy text-base">Filter Kategori</h3>
-              <button
-                onClick={() => setDrawerOpen(false)}
-                className="size-8 flex items-center justify-center rounded-full bg-muted text-muted-foreground hover:bg-border transition-colors"
-              >
+              <button onClick={() => setDrawerOpen(false)} className="size-8 flex items-center justify-center rounded-full bg-muted text-muted-foreground hover:bg-border transition-colors">
                 <X className="size-4" />
               </button>
             </div>
-
-            {/* Category grid */}
             <div className="grid grid-cols-2 gap-2">
               {CATEGORIES.map((cat) => {
                 const active = currentCategory === cat
@@ -172,9 +168,7 @@ export function CatalogFilters() {
                     onClick={() => selectCategory(cat)}
                     className={cn(
                       "flex items-center justify-between rounded-2xl border px-4 py-3 text-sm font-medium transition-all text-left font-sans",
-                      active
-                        ? "bg-navy text-white border-navy shadow-sm"
-                        : "bg-muted text-foreground border-border hover:border-gold/40 hover:bg-secondary"
+                      active ? "bg-navy text-white border-navy shadow-sm" : "bg-muted text-foreground border-border hover:border-gold/40 hover:bg-secondary"
                     )}
                   >
                     <span className="truncate">{cat}</span>
@@ -183,8 +177,6 @@ export function CatalogFilters() {
                 )
               })}
             </div>
-
-            {/* Reset — uses gold border treatment */}
             {activeCount > 0 && (
               <button
                 onClick={() => {

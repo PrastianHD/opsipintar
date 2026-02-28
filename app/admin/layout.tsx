@@ -2,7 +2,8 @@
 
 import { usePathname, useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
-import { Sparkles, LayoutDashboard, PlusCircle, LogOut, ChevronRight } from "lucide-react"
+import { LayoutDashboard, PlusCircle, LogOut, ChevronRight } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { useState, useTransition } from "react"
@@ -34,15 +35,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         ? "w-72 h-full"
         : "hidden lg:flex w-64 min-h-screen sticky top-0 h-screen"
     )}>
-      {/* Brand */}
-      <div className="flex items-center gap-3 px-6 py-6 border-b border-white/8">
-        <div className="flex items-center justify-center size-9 rounded-xl bg-gold shadow-[0_2px_12px_rgba(197,160,89,0.4)] shrink-0">
-          <Sparkles className="size-4.5 text-navy" />
-        </div>
-        <div>
-          <p className="font-heading font-black text-sm text-white tracking-tight">Opsi Pintar</p>
-          <p className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: 'rgba(197,160,89,0.7)' }}>Admin Panel</p>
-        </div>
+      {/* Brand / Logo */}
+      <div className="flex items-center gap-3 px-6 py-5 border-b border-white/8">
+        <Image
+          src="/logo.png"
+          alt="Opsi Pintar"
+          width={140}
+          height={56}
+          className="h-10 w-auto object-contain"
+        />
       </div>
 
       {/* Nav */}
@@ -116,12 +117,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <span className="w-4 h-0.5 bg-white/60 rounded-full" />
             <span className="w-5 h-0.5 bg-white/60 rounded-full" />
           </button>
-          <div className="flex items-center gap-2">
-            <div className="flex items-center justify-center size-7 rounded-lg bg-gold shrink-0">
-              <Sparkles className="size-3.5 text-navy" />
-            </div>
-            <span className="font-heading font-black text-sm text-white">Admin Panel</span>
-          </div>
+          <Image
+            src="/logo.png"
+            alt="Opsi Pintar"
+            width={100}
+            height={40}
+            className="h-8 w-auto object-contain"
+          />
         </div>
 
         {/* Page content */}
