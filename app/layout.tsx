@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Montserrat, Poppins, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import FomoPopup from '@/components/ui/fomopopup';
 import './globals.css'
 
 const montserrat = Montserrat({
@@ -55,6 +56,7 @@ export default function RootLayout({
     <html lang="id" className={`${montserrat.variable} ${poppins.variable} ${geistMono.variable}`}>
       <body className="font-sans antialiased">
         {children}
+        <FomoPopup />
         <Analytics />
       </body>
     </html>
