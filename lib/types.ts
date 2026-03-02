@@ -24,6 +24,7 @@ export const CATEGORIES = [
   'Kebutuhan Dapur',
   'Digital',
   'Opsi Lainnya',
+  'Opsi Fashion',
 ] as const
 
 export type Category = (typeof CATEGORIES)[number]
